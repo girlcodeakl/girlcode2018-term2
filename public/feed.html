@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <title>Message Feed</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1 class="title">Message Feed</h1>
+    <div class="message-list">
+    </div>
+    <script>
+//Hello! This is the start of the JavaScript.
+
+function displayMessage(post) {
+  let postElement = $('<div class="post"></div>');
+  $(".message-list").append(postElement);
+
+  let messageElement = $('<div class="message">' + post + '</div>');
+  postElement.append(messageElement);
+}
+
+function createFeed(posts) {
+  posts.forEach(displayMessage);
+}
+
+$.get("/posts", createFeed);
+
+//This is the end of the JavaScript.
+    </script>
+  </body>
+</html>
