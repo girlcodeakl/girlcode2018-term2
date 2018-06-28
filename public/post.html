@@ -2,12 +2,30 @@
 <html>
   <head>
     <meta charset='utf-8'>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
       <form method="post" action="/posts">
-          <input type="text" name="message" placeholder="message goes here">
-          <button>Post it!</button>
+
+          <input type="text" name="message" value="message goes here" class="messageInput">
+
+
+            <button class="postButton">
+            Post it!
+          </button>
+<div class="note"></div>
+
       </form>
+      <script>
+      function myCoolFunction(e) {
+    e.preventDefault();
+    let data = {};
+    data.message = $(".messageInput").val();
+    $(".note").text("Thanks! Your message was saved!");
+$.post( "/posts" , data );
+}
+$(".postButton").on("click", myCoolFunction);
+</script>
   </body>
 </html>
