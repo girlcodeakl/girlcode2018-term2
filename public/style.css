@@ -8,7 +8,7 @@ body {
 }
 
 h1 {
-  color: #FFB03B;
+  color: black;
 }
 
 .post {
@@ -49,4 +49,32 @@ body {
 }
 .postId {
     display: none;
+}
+
+input {
+    border: 1px solid green;
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    margin: 10px;
+    padding: 5px;
+}
+
+button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    background-color: #008CBA; /* Blue */
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+button:hover {
+  background-color: #006d91;
+  color: white;
 }
