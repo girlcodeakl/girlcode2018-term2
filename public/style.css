@@ -47,6 +47,9 @@ body {
   background-color: #4CAF50;
   color: white;
 }
+.postId {
+    display: none;
+}
 
 input {
     border: 1px solid green;

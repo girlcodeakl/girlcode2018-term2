@@ -15,12 +15,17 @@ app.use(bodyParser.json())
 
 //make an empty list
 let posts = [];
-
 //let a client GET the list
 function sendPostsList(request, response) {
   response.send(posts);
 }
 app.get('/posts', sendPostsList);
+app.get('/post', function (req, res) {
+   let searchId = req.query.id;
+   console.log("Searching for post " + searchId);
+   let post = posts.find(x => x.id == searchId);
+   res.send(post);
+});
 
 //let a client POST something new
 function saveNewPost(request, response) {
@@ -31,6 +36,7 @@ function saveNewPost(request, response) {
   post.message = request.body.message;
   post.image = request.body.image;
   post.time = new Date();
+  post.id = Math.round(Math.random() * 10000);
   posts.push(post);
   response.send("thanks for your message. Press back to add another");
 }

@@ -37,6 +37,9 @@ postElement.append(imageElement);
 
   let messageElement = $('<div class="message">' + post.message + '</div>');
   postElement.append(messageElement) + postElement.append(timeElement);
+
+  let idElement = $('<div class="postId">' + post.id + '</div>');
+  postElement.append(idElement);
 }
 
 function createFeed(posts) {
