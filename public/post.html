@@ -14,7 +14,7 @@
       <form method="post" action="/posts">
 
           <input type="text" name="message" value="message goes here" class="messageInput">
-
+          <input type="text" name="image" value="picture url goes here" class="imageInput">
 
             <button class="postButton">
             Post it!
@@ -27,6 +27,7 @@
     e.preventDefault();
     let data = {};
     data.message = $(".messageInput").val();
+    data.image = $(".imageInput").val();
     $(".note").text("Thanks! Your message was saved!");
 $.post( "/posts" , data );
 }
