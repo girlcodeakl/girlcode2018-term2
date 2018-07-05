@@ -26,6 +26,9 @@ function displayMessage(post) {
   let postElement = $('<div class="post"></div>');
   $(".message-list").append(postElement);
 
+  let imageElement = $('<img src='+ post.image + '>');
+postElement.append(imageElement);
+
   let timeElement = $('<div class="time">' + $.format.prettyDate(post.time) + '</div>');
   postElement.append(timeElement);
 
@@ -41,11 +44,6 @@ function createFeed(posts) {
 }
 
 $.get("/posts", createFeed);
-
-///hack: fix invalid dates
-if (post.time === undefined) {
-   post.time = new Date("2016-01-01");
-}
 
 //This is the end of the JavaScript.
     </script>
