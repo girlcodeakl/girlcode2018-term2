@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset='utf-8'>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -11,14 +12,23 @@
   <a href="/feed.html">Read the feed</a>
   <a href="/post.html">Post something</a>
 </div>
+
+<h1> Write your post </h1>
+
       <form method="post" action="/posts">
 
-          <br><br>
+          <br>
+          <label>Name:</label>
+          <br>
           <input type="text" name="name" value="what is your name" class="nameInput">
-          <br><br>
+          <br>
+          <label>Message:</label>
+          <br>
           <input type="text" name="message" value="message goes here" class="messageInput">
+          <br>
+          <label>Picture:</label>
+          <br>
           <input type="text" name="image" value="picture url goes here" class="imageInput">
-
             <button class="postButton">
             Post it!
           </button>
