@@ -28,6 +28,9 @@ function displayMessage(post) {
   let timeElement = $('<div class="time">' + $.format.prettyDate(post.time) + '</div>');
   postElement.append(timeElement);
 
+  let authorElement = $('<div class="name">' + post.author + '</div>');
+  postElement.append(authorElement);
+
   let messageElement = $('<div class="message">' + post.message + '</div>');
   postElement.append(messageElement) + postElement.append(timeElement);
 }
