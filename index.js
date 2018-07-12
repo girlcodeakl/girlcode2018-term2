@@ -42,6 +42,20 @@ function saveNewPost(request, response) {
 }
 app.post('/posts', saveNewPost);
 
+//pick and return a random element from the given list
+function pickRandomFrom(list) {
+  return list[Math.floor(Math.random()*list.length)];
+};
+
+//give the client a random post
+function getRandomPost(request, response) {
+  let randomPost = pickRandomFrom(posts);
+  let list = [randomPost]; //we put it inside a list, just because it makes our existing feed code work
+  response.send(list);
+}
+
+app.get('/random', getRandomPost);
+
 //listen for connections on port 3000
 app.listen(process.env.PORT || 3000);
 console.log("Hi! I am listening at http://localhost:3000");
