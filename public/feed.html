@@ -26,7 +26,7 @@ function displayMessage(post) {
   let postElement = $('<div class="post"></div>');
   $(".message-list").append(postElement);
 
-  let imageElement = $('<img src='+ post.image + '>');
+  let imageElement = $('<img class="image" src='+ post.image + '>');
 postElement.append(imageElement);
 
   let timeElement = $('<div class="time">' + $.format.prettyDate(post.time) + '</div>');

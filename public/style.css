@@ -24,6 +24,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.image {
+      max-width: 80%;
+      margin: auto;
+      padding: 10px;
+  }
+
 .topnav {
   overflow: hidden;
   background-color: #333;
