@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="topnav">
+  <a href="/index.html">Home</a>
+  <a href="/feed.html">Read the feed</a>
+  <a href="/post.html">Post something</a>
+</div>
+
+<h1> Log In </h1>
+
+      <form method="login" action="/login">
+
+          <br>
+          <label>Email:</label>
+          <br>
+          <input type="text" name="email" placeholder="email" class="emailloginInput">
+          <br>
+          <label>Password:</label>
+          <br>
+          <input type="text" name="password" placeholder="Password" class="passwordloginInput">
+          <br>
+            <button class="loginButton">
+            Log In
+          </button>
+<div class="note"></div>
+
+      </form>
+<h1> Sign Up </h1>
+      <form method="login" action="/login">
+
+          <br>
+          <label>Full Name:</label>
+          <br>
+          <input type="text" name="fullname" placeholder="Full name" class="fullnameInput">
+          <br>
+          <label>Email:</label>
+          <br>
+          <input type="text" name="email" placeholder="Email" class="emailsignupInput">
+          <br>
+          <label>Password:</label>
+          <br>
+          <input type="text" name="password" placeholder="Password" class="passwordsignupInput">
+            <button class="signupButton">
+            Sign up for ~our site~!
+          </button>
+<div class="note"></div>
+
+      </form>
+      <script>
+      function login(e) {
+    e.preventDefault();
+    let data = {};
+    data.email = $(".emailloginInput").val();
+    data.password = $(".passwordloginInput").val();
+    $(".note").text(" You have logged in!");
+$.login( "/login" , data );
+}
+
+      function signup(e) {
+    e.preventDefault();
+    let data = {};
+    data.user = $(".fullnameInput").val();
+    data.email = $(".emailsignupInput").val();
+    data.password = $(".passwordsignupInput").val();
+      $(".note").text("Thanks! You have signed up!");
+$.login( "/login" , data );
+}
+
+$(".loginbutton").on("click", login);
+$(".signupbutton").on("click", signup);
+
+</script>
+  </body>
+</html>
