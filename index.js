@@ -35,6 +35,9 @@ function saveNewPost(request, response) {
   post.author = request.body.author;
   post.message = request.body.message;
   post.image = request.body.image;
+  if (post.image == "") {
+  post.image = "https://files.slack.com/files-pri/T07SEK7A7-FBNMQBR6V/default.png";
+}
   post.time = new Date();
   post.id = Math.round(Math.random() * 10000);
   posts.push(post);
