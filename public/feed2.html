@@ -9,10 +9,10 @@
   </head>
   <body>
     <div class="topnav">
-  <a href="/index.html">Home</a>
-  <a href="/feed.html">Read the feed</a>
-  <a href="/post.html">Post something</a>
-
+      <a href="/index.html">Home</a>
+      <a href="/feed.html">My favourites</a>
+      <a href="/feed2.html">Read the feed</a>
+      <a href="/post.html">Post something</a>
 </div>
     <h1 class="title">Message Feed</h1>
     <div class="message-list">
@@ -56,7 +56,7 @@ function createFeed(posts) {
     $.get("/random", createFeed);
 }
 
-//function calls for next post when page loads so won't load a blank feed 
+//function calls for next post when page loads so won't load a blank feed
 nextpost();
 
 //click handler, when someone clicks on the Next button, next post comes on
