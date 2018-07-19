@@ -48,14 +48,20 @@ postElement.append(imageElement);
 }
 
 function createFeed(posts) {
+  $(".message-list").empty();
   posts.forEach(displayMessage);
-
 }
+
   function nextpost(posts) {
     $.get("/random", createFeed);
 }
 
+//function calls for next post when page loads so won't load a blank feed 
+nextpost();
+
+//click handler, when someone clicks on the Next button, next post comes on
 $(".showNextPost").on("click",nextpost);
+
 
 //$.get("/random", createFeed);
 
