@@ -2,6 +2,7 @@
 let express = require('express')
 let app = express();
 let bodyParser = require('body-parser')
+let databasePosts = null;
 
 //If a client asks for a file,
 //look in the public folder. If it's there, give it to them.
@@ -35,12 +36,17 @@ function saveNewPost(request, response) {
   post.author = request.body.author;
   post.message = request.body.message;
   post.image = request.body.image;
+  if (post.image == "") {
+  post.image = "http://4.bp.blogspot.com/-NVNKQIypEFk/T82Of_w1KiI/AAAAAAAAAQE/WXTMrw3dUb8/s1600/mickey-mouse-and-minnie-mouse-cooking-coloring-pages-1.jpg";
+}
   post.time = new Date();
   post.id = Math.round(Math.random() * 10000);
   posts.push(post);
   response.send("thanks for your message. Press back to add another");
+  databasePosts.insert(post);
 }
 app.post('/posts', saveNewPost);
+
 
 //pick and return a random element from the given list
 function pickRandomFrom(list) {
@@ -55,6 +61,22 @@ function getRandomPost(request, response) {
 }
 
 app.get('/random', getRandomPost);
+
+let MongoClient = require('mongodb').MongoClient;
+let databaseUrl = 'mongodb://girlcode:hats123@ds233531.mlab.com:33531/girlcode2018-term2';
+let databaseName = 'girlcode2018-term2';
+
+MongoClient.connect(databaseUrl, {useNewUrlParser: true}, function(err, client) {
+  if (err) throw err;
+  console.log("yay we connected to the database");
+  let database = client.db(databaseName);
+  databasePosts = database.collection('posts');
+  databasePosts.find({}).toArray(function(err, results) {
+    console.log("Found " + results.length + " results")
+    posts = results
+  });
+});
+
 
 //listen for connections on port 3000
 app.listen(process.env.PORT || 3000);
