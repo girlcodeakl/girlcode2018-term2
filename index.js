@@ -37,7 +37,7 @@ function saveNewPost(request, response) {
   post.message = request.body.message;
   post.image = request.body.image;
   if (post.image == "") {
-  post.image = "https://files.slack.com/files-pri/T07SEK7A7-FBNMQBR6V/default.png";
+  post.image = "http://4.bp.blogspot.com/-NVNKQIypEFk/T82Of_w1KiI/AAAAAAAAAQE/WXTMrw3dUb8/s1600/mickey-mouse-and-minnie-mouse-cooking-coloring-pages-1.jpg";
 }
   post.time = new Date();
   post.id = Math.round(Math.random() * 10000);
