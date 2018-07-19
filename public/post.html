@@ -5,6 +5,7 @@
     <meta charset='utf-8'>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
   </head>
   <body>
     <div class="topnav">
@@ -14,22 +15,22 @@
       <a href="/post.html">Post something</a>
 </div>
 
-<h1> Write your post </h1>
+<h1> Post Your Recipe Here</h1>
 
       <form method="post" action="/posts">
 
           <br>
           <label>Name:</label>
           <br>
-          <input type="text" name="name" placeholder="what is your name" class="nameInput">
+          <input type="text" name="name" placeholder="name" class="nameInput">
           <br>
           <label>Message:</label>
           <br>
-          <input type="text" name="message" placeholder="message goes here" class="messageInput">
+          <input type="text" name="message" placeholder="recipe goes here" class="messageInput">
           <br>
           <label>Picture:</label>
           <br>
-          <input type="text" name="image" placeholder="picture url goes here" class="imageInput">
+          <input type="text" name="image" placeholder="photo url goes here" class="imageInput">
             <button class="postButton">
             Post it!
           </button>
@@ -43,7 +44,7 @@
     data.author = $(".nameInput").val();
     data.message = $(".messageInput").val();
     data.image = $(".imageInput").val();
-    $(".note").text("Thanks! Your message was saved!");
+    $(".note").text("Thanks! Your recipe was saved!");
 $.post( "/posts" , data );
 }
 $(".postButton").on("click", myCoolFunction);
