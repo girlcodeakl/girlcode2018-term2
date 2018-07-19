@@ -3,6 +3,8 @@ let express = require('express')
 let app = express();
 let bodyParser = require('body-parser')
 let databasePosts = null;
+var Filter = require('bad-words'),
+  filter = new Filter();
 
 //If a client asks for a file,
 //look in the public folder. If it's there, give it to them.
@@ -31,10 +33,11 @@ app.get('/post', function (req, res) {
 //let a client POST something new
 function saveNewPost(request, response) {
   console.log(request.body.message);
-  console.log(request.body.author); //write it on the command prompt so we can see
+  console.log(request.body.author);
+  //write it on the command prompt so we can see
   let post= {};
-  post.author = request.body.author;
-  post.message = request.body.message;
+  post.author = filter.clean(request.body.author);
+  post.message = filter.clean(request.body.message);
   post.image = request.body.image;
   if (post.image == "") {
   post.image = "http://4.bp.blogspot.com/-NVNKQIypEFk/T82Of_w1KiI/AAAAAAAAAQE/WXTMrw3dUb8/s1600/mickey-mouse-and-minnie-mouse-cooking-coloring-pages-1.jpg";
