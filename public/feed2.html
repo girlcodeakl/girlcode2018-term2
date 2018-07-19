@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <title>Message Feed</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="topnav">
+  <a href="/index.html">Home</a>
+  <a href="/feed.html">Read the feed</a>
+  <a href="/post.html">Post something</a>
+
+</div>
+    <h1 class="title">Message Feed</h1>
+    <div class="message-list">
+    </div>
+
+  </div>
+  <a class="showNextPost" href="#">Next</a>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script>
+
+
+//Hello! This is the start of the JavaScript.
+
+function displayMessage(post) {
+  let postElement = $('<div class="post"></div>');
+  $(".message-list").append(postElement);
+
+  let imageElement = $('<img src='+ post.image + '>');
+postElement.append(imageElement);
+
+  let timeElement = $('<div class="time">' + $.format.prettyDate(post.time) + '</div>');
+  postElement.append(timeElement);
+
+  let authorElement = $('<div class="name">' + post.author + '</div>');
+  postElement.append(authorElement);
+
+  let messageElement = $('<div class="message">' + post.message + '</div>');
+  postElement.append(messageElement) + postElement.append(timeElement);
+
+  let idElement = $('<div class="postId">' + post.id + '</div>');
+  postElement.append(idElement);
+}
+
+function createFeed(posts) {
+  $(".message-list").empty();
+  posts.forEach(displayMessage);
+}
+
+  function nextpost(posts) {
+    $.get("/random", createFeed);
+}
+
+//function calls for next post when page loads so won't load a blank feed 
+nextpost();
+
+//click handler, when someone clicks on the Next button, next post comes on
+$(".showNextPost").on("click",nextpost);
+
+
+//$.get("/random", createFeed);
+
+//This is the end of the JavaScript.
+    </script>
+  </body>
+</html>
