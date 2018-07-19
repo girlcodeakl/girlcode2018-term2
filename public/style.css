@@ -46,6 +46,9 @@ body {
   background-color: #679E02;
 }
 
+.hidden {display: none}
+
+
 .topnav a {
   color: #f2f2f2;
   margin-top: 20px;
