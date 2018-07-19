@@ -47,6 +47,21 @@ function saveNewPost(request, response) {
 }
 app.post('/posts', saveNewPost);
 
+
+//pick and return a random element from the given list
+function pickRandomFrom(list) {
+  return list[Math.floor(Math.random()*list.length)];
+};
+
+//give the client a random post
+function getRandomPost(request, response) {
+  let randomPost = pickRandomFrom(posts);
+  let list = [randomPost]; //we put it inside a list, just because it makes our existing feed code work
+  response.send(list);
+}
+
+app.get('/random', getRandomPost);
+
 let MongoClient = require('mongodb').MongoClient;
 let databaseUrl = 'mongodb://girlcode:hats123@ds233531.mlab.com:33531/girlcode2018-term2';
 let databaseName = 'girlcode2018-term2';
@@ -61,6 +76,7 @@ MongoClient.connect(databaseUrl, {useNewUrlParser: true}, function(err, client) 
     posts = results
   });
 });
+
 
 //listen for connections on port 3000
 app.listen(process.env.PORT || 3000);
