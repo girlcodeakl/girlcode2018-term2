@@ -45,15 +45,23 @@ function saveNewPost(request, response) {
 app.post('/posts', saveNewPost);
 
 //delete message
-function deleteHandler(req, res) {
-   console.log("client wants to delete this post: " + req.body.postId );
-    //code goes here
-   res.send("ok");
+function deleteHandler(request, response) {
+   console.log("client wants to delete this post: " + request.body.postId );
+
+   if (request.body.password === "1234") {
+     let postIdNumber = parseInt(request.body.postId);
+     posts = posts.filter(post => post.id != postIdNumber);
+     databasePosts.deleteOne({ id : postIdNumber })
+     response.send("ok");
+   }
+  else {
+  console.log("Wrong password");
+  response.send("Wrong password");
+  }
+
+
 }
 app.post("/delete", deleteHandler);
-
-let postIdNumber = parseInt(request.body.postId);
-posts = posts.filter(post => post.id != postIdNumber);
 
 let MongoClient = require('mongodb').MongoClient;
 let databaseUrl = 'mongodb://girlcode:hats123@ds233531.mlab.com:33531/girlcode2018-term2';

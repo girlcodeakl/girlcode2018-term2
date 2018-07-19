@@ -34,7 +34,7 @@
 
       </form>
       <script>
-      function myCoolFunction(e) {
+function myCoolFunction(e) {
     e.preventDefault();
     let data = {};
     data.author = $(".nameInput").val();
@@ -42,9 +42,12 @@
     data.postId= $(".idInput").val();
     data.password= $(".passwordInput").val();
     data.message = $(".messageInput").val();
-    $(".note").text("Thanks! Your message was deleted!");
-$.post( "/delete" , data );
+    $.post( "/delete" , data , displayResponse);
 }
+function displayResponse (data, textStatus) {
+    $(".note").text(data);
+}
+
 $(".postButton").on("click", myCoolFunction);
 </script>
   </body>
