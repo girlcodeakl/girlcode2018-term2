@@ -35,6 +35,9 @@ body {
   background-color: #333;
 }
 
+.hidden {display: none}
+
+
 .topnav a {
   float: left;
   color: #f2f2f2;
