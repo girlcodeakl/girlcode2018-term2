@@ -3,6 +3,8 @@ let express = require('express')
 let app = express();
 let bodyParser = require('body-parser')
 let databasePosts = null;
+var Filter = require('bad-words'),
+  filter = new Filter();
 
 //If a client asks for a file,
 //look in the public folder. If it's there, give it to them.
@@ -31,11 +33,15 @@ app.get('/post', function (req, res) {
 //let a client POST something new
 function saveNewPost(request, response) {
   console.log(request.body.message);
-  console.log(request.body.author); //write it on the command prompt so we can see
+  console.log(request.body.author);
+  //write it on the command prompt so we can see
   let post= {};
-  post.author = request.body.author;
-  post.message = request.body.message;
+  post.author = filter.clean(request.body.author);
+  post.message = filter.clean(request.body.message);
   post.image = request.body.image;
+  if (post.image == "") {
+  post.image = "http://4.bp.blogspot.com/-NVNKQIypEFk/T82Of_w1KiI/AAAAAAAAAQE/WXTMrw3dUb8/s1600/mickey-mouse-and-minnie-mouse-cooking-coloring-pages-1.jpg";
+}
   post.time = new Date();
   post.id = Math.round(Math.random() * 10000);
   posts.push(post);
@@ -63,6 +69,21 @@ function deleteHandler(request, response) {
 }
 app.post("/delete", deleteHandler);
 
+//pick and return a random element from the given list
+function pickRandomFrom(list) {
+  return list[Math.floor(Math.random()*list.length)];
+};
+
+//give the client a random post
+function getRandomPost(request, response) {
+  let randomPost = pickRandomFrom(posts);
+  let list = [randomPost]; //we put it inside a list, just because it makes our existing feed code work
+  response.send(list);
+}
+
+app.get('/random', getRandomPost);
+
+
 let MongoClient = require('mongodb').MongoClient;
 let databaseUrl = 'mongodb://girlcode:hats123@ds233531.mlab.com:33531/girlcode2018-term2';
 let databaseName = 'girlcode2018-term2';
@@ -77,6 +98,7 @@ MongoClient.connect(databaseUrl, {useNewUrlParser: true}, function(err, client) 
     posts = results
   });
 });
+
 
 //listen for connections on port 3000
 app.listen(process.env.PORT || 3000);
