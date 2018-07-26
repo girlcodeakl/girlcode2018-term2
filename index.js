@@ -28,6 +28,20 @@ app.get('/post', function (req, res) {
    res.send(post);
 });
 
+function login(request, response) {
+  console.log("someone tried to log in");
+  response.send("OK");
+}
+
+app.post("/login", login);
+
+function signup(request, response) {
+  console.log("someone tried to sign up");
+  response.send("OK");
+}
+
+app.post("/signup", signup);
+
 //let a client POST something new
 function saveNewPost(request, response) {
   console.log(request.body.message);
@@ -43,6 +57,7 @@ function saveNewPost(request, response) {
   databasePosts.insert(post);
 }
 app.post('/posts', saveNewPost);
+
 
 let MongoClient = require('mongodb').MongoClient;
 let databaseUrl = 'mongodb://girlcode:hats123@ds233531.mlab.com:33531/girlcode2018-term2';

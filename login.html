@@ -55,13 +55,14 @@
 
       </form>
       <script>
+
       function myloginfunction(e) {
     e.preventDefault();
     let data = {};
     data.email = $(".emailloginInput").val();
     data.password = $(".passwordloginInput").val();
     $(".note").text(" You have logged in!");
-$.post( "/login" , data );
+$.post( "/login" , data, showServerReply );
 }
 
 
@@ -72,7 +73,7 @@ $.post( "/login" , data );
     data.email = $(".emailsignupInput").val();
     data.password = $(".passwordsignupInput").val();
       $(".note").text("Thanks! You have signed up!");
-$.post( "/signup" , data );
+$.post( "/signup" , data, showServerReply );
 }
 
 $(".loginbutton").on("click", myloginfunction);
