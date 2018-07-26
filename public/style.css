@@ -3,7 +3,7 @@ body {
 }
 
 .message-list {
-  background-color: white;
+  background-color: #FFF0A5;
   padding: 20px;
 }
 .logo{
@@ -12,50 +12,39 @@ body {
   padding-bottom: 10px;
 }
 h1 {
-  color: #36454f;
+  color: black;
 }
 
 .post {
-  margin: 10px;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 25px;
   padding: 10px;
-  border: 5px solid #679E02;
+  border: 2px solid #FFB03B;
   border-radius: 5px;
-  color: #36454f;
-}
-
-h2 {
-  color: #36454f;
-}
-
-p {
-  color: #36454f;
+  color: #468966;
 }
 
 body {
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .image {
       max-width: 80%;
       margin: auto;
       padding: 10px;
+      width: 600px;
   }
 
 .topnav {
   overflow: hidden;
-  text-align: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  background-color: #679E02;
+  background-color: #333;
 }
 
-.hidden {display: none}
-
-
 .topnav a {
+  float: left;
   color: #f2f2f2;
-  margin-top: 20px;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
