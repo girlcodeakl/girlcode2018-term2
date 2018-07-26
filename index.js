@@ -4,6 +4,8 @@ let app = express();
 let bodyParser = require('body-parser')
 let sanitizer = require('sanitizer');
 let databasePosts = null;
+let session = require('express-session');
+app.use(session({ secret: 'girlcodesecret', cookie: { maxAge: 60000 }}));
 var Filter = require('bad-words'),
   filter = new Filter();
 
@@ -16,6 +18,28 @@ app.use(express.static(__dirname + '/public'));
 //this lets us read POST data
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+//when someone posts to favourites, run the 'addFavourite' function
+app.post("/favourites", addFavourite);
+
+function addFavourite(request, response) {
+    let postId = request.body.postId;
+   if (request.session.favourites === undefined) {
+        request.session.favourites = []
+   }
+   request.session.favourites.push(postId);
+   response.send("ok");
+}
+
+//when someone gets favourites, run the 'getFavourites' function
+app.get("/favourites", getFavourites);
+
+function getFavourites(request, response) {
+  if (request.session.favourites === undefined) {
+    request.session.favourites = []
+  }
+  response.send(request.session.favourites.map(id => posts.find(post => post.id == id)));
+}
 
 //make an empty list
 let posts = [];

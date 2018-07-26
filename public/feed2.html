@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
   </head>
+  <img class="logo" src="/images/Blender-logo.png"/>
   <body>
     <div class="topnav">
       <a href="/index.html">Home</a>
@@ -20,7 +21,8 @@
     </div>
 
   </div>
-  <a class="showNextPost" href="#">Next</a>
+  <a class="showNextPostYes" href="#">Yes</a>
+  <a class="showNextPostNo" href="#">No</a>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
     <script>
@@ -53,15 +55,29 @@ function createFeed(posts) {
   posts.forEach(displayMessage);
 }
 
-  function nextpost(posts) {
+function nextpost(posts) {
+  $.get("/random", createFeed);
+}
+
+  function nextpostYes(posts) {
     $.get("/random", createFeed);
+    alert("Added to favourites!");
+    let data = {}
+    data.postId = $(".postId").text();
+    $.post("/favourites", data);
+}
+
+function nextpostNo(posts) {
+  $.get("/random", createFeed);
+  alert("Nope!");
 }
 
 //function calls for next post when page loads so won't load a blank feed
 nextpost();
 
 //click handler, when someone clicks on the Next button, next post comes on
-$(".showNextPost").on("click",nextpost);
+$(".showNextPostYes").on("click",nextpostYes);
+$(".showNextPostNo").on("click",nextpostNo);
 
 
 //$.get("/random", createFeed);
