@@ -10,20 +10,18 @@
   </head>
   <body>
     <div class="topnav">
-  <a href="/index.html">Home</a>
-  <a href="/feed.html">My favourites</a>
-  <a href="/feed2.html">Read the feed</a>
-  <a href="/post.html">Post something</a>
+      <a href="/index.html">Home</a>
+      <a href="/feed.html">My favourites</a>
+      <a href="/feed2.html">Read the feed</a>
+      <a href="/post.html">Post something</a>
 </div>
     <h1 class="title">Message Feed</h1>
-
-    <form>
-      <input type="text" name="name" placeholder="Search favourites" class="filter">
-      <button class="postButton">Search</button>
-          </form>
-
     <div class="message-list">
     </div>
+
+  </div>
+  <a class="showNextPost" href="#">Next</a>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
     <script>
 
@@ -34,7 +32,7 @@ function displayMessage(post) {
   let postElement = $('<div class="post"></div>');
   $(".message-list").append(postElement);
 
-  let imageElement = $('<img class="image" src='+ post.image + '>');
+  let imageElement = $('<img src='+ post.image + '>');
 postElement.append(imageElement);
 
   let timeElement = $('<div class="time">' + $.format.prettyDate(post.time) + '</div>');
@@ -51,31 +49,22 @@ postElement.append(imageElement);
 }
 
 function createFeed(posts) {
-  posts.reverse();
+  $(".message-list").empty();
   posts.forEach(displayMessage);
 }
 
-
-
-function filterFeed(posts)
-{
-  let searchText = $(".filter").val()
-  $(".message-list").children().each(function(number, element)
-    {
-      //code in here will be run once for each post in the list
-      if (element.innerHTML.toLowerCase().includes(searchText.toLowerCase()))
-        {
-        $(element).removeClass("hidden");
-        } else
-        {
-        $(element).addClass("hidden");
-        };
-    });
+  function nextpost(posts) {
+    $.get("/random", createFeed);
 }
 
-$.get("/posts", createFeed);
-$(".filter").on("keyup", filterFeed);
+//function calls for next post when page loads so won't load a blank feed
+nextpost();
 
+//click handler, when someone clicks on the Next button, next post comes on
+$(".showNextPost").on("click",nextpost);
+
+
+//$.get("/random", createFeed);
 
 //This is the end of the JavaScript.
     </script>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="topnav">
+  <a href="/index.html">Home</a>
+  <a href="/feed.html">Read the feed</a>
+  <a href="/post.html">Post something</a>
+</div>
+
+<h1> Delete your post </h1>
+
+      <form method="post" action="/posts">
+
+          <br>
+          <label>ID number:</label>
+          <br>
+          <input type="text" name="postId" placeholder="ID number" class="idInput">
+          <br>
+          <label>Password:</label>
+          <br>
+          <input type="text" name="password" placeholder="password" class="passwordInput">
+          <br>
+
+            <button class="postButton">
+            Delete it!
+          </button>
+<div class="note"></div>
+
+      </form>
+      <script>
+function myCoolFunction(e) {
+    e.preventDefault();
+    let data = {};
+    data.author = $(".nameInput").val();
+    data.message = $(".messageInput").val();
+    data.postId= $(".idInput").val();
+    data.password= $(".passwordInput").val();
+    data.message = $(".messageInput").val();
+    $.post( "/delete" , data , displayResponse);
+}
+function displayResponse (data, textStatus) {
+    $(".note").text(data);
+}
+
+$(".postButton").on("click", myCoolFunction);
+</script>
+  </body>
+</html>
