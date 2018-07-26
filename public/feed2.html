@@ -98,10 +98,12 @@ $(".showNextPostNo").on("click",nextpostNo);
 
 
 //$.get("/random", createFeed);
-$('img').on('dragstart', function(event) { event.preventDefault(); });
 
 //tree vector pictures designed by Freepik
 function swipe (){
+
+    $('img').on('dragstart', function(event) { event.preventDefault(); });
+
     $(".card").on("swiperight",function(){
       //to do: tell server we liked this post
       $(this).addClass('rotate-left').delay(700).fadeOut(1);
