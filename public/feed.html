@@ -73,7 +73,7 @@ function filterFeed(posts)
     });
 }
 
-$.get("/posts", createFeed);
+$.get("/favourites", createFeed);
 $(".filter").on("keyup", filterFeed);
 
 
