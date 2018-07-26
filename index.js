@@ -2,6 +2,7 @@
 let express = require('express')
 let app = express();
 let bodyParser = require('body-parser')
+let sanitizer = require('sanitizer');
 let databasePosts = null;
 
 //If a client asks for a file,
@@ -35,6 +36,7 @@ function saveNewPost(request, response) {
   let post= {};
   post.author = request.body.author;
   post.message = request.body.message;
+  sanitizer.sanitize(request.body.message);
   post.image = request.body.image;
   if (post.image == "") {
   post.image = "http://4.bp.blogspot.com/-NVNKQIypEFk/T82Of_w1KiI/AAAAAAAAAQE/WXTMrw3dUb8/s1600/mickey-mouse-and-minnie-mouse-cooking-coloring-pages-1.jpg";
