@@ -37,8 +37,6 @@
     </div>
 
   </div>
-  <a class="showNextPostYes" href="#">Yes</a>
-  <a class="showNextPostNo" href="#">No</a>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
     <script>
@@ -78,7 +76,6 @@ function nextpost(posts) {
 
   function nextpostYes(posts) {
     $.get("/random", createFeed);
-    alert("Added to favourites!");
     let data = {}
     data.postId = $(".postId").text();
     $.post("/favourites", data);
@@ -86,16 +83,10 @@ function nextpost(posts) {
 
 function nextpostNo(posts) {
   $.get("/random", createFeed);
-  alert("Nope!");
 }
 
 //function calls for next post when page loads so won't load a blank feed
 nextpost();
-
-//click handler, when someone clicks on the Next button, next post comes on
-$(".showNextPostYes").on("click",nextpostYes);
-$(".showNextPostNo").on("click",nextpostNo);
-
 
 //$.get("/random", createFeed);
 
@@ -105,21 +96,15 @@ function swipe (){
     $('img').on('dragstart', function(event) { event.preventDefault(); });
 
     $(".card").on("swiperight",function(){
-      //to do: tell server we liked this post
+      setTimeout(nextpostYes, 1700);
       $(this).addClass('rotate-left').delay(700).fadeOut(1);
       $(this).append('<div class="status like">Like!</div>');
-      if ( $(this).is(':last-child') ) {
-        //refresh list
-       }
     });
 
    $(".card").on("swipeleft",function(){
-    //to do: tell server we disliked this post
+    setTimeout(nextpostNo, 1700);
     $(this).addClass('rotate-right').delay(700).fadeOut(1);
     $(this).append('<div class="status dislike">Dislike!</div>');
-    if ( $(this).is(':last-child') ) {
-     //refresh list
-    }
   });
 };
 
