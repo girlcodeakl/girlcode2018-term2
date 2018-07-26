@@ -4,6 +4,8 @@ let app = express();
 let bodyParser = require('body-parser')
 let sanitizer = require('sanitizer');
 let databasePosts = null;
+var Filter = require('bad-words'),
+  filter = new Filter();
 
 //If a client asks for a file,
 //look in the public folder. If it's there, give it to them.
@@ -29,18 +31,35 @@ app.get('/post', function (req, res) {
    res.send(post);
 });
 
+function login(request, response) {
+  console.log("someone tried to log in");
+  response.send("OK");
+}
+
+app.post("/login", login);
+
+function signup(request, response) {
+  console.log("someone tried to sign up");
+  response.send("OK");
+}
+
+app.post("/signup", signup);
+
 //let a client POST something new
 function saveNewPost(request, response) {
   console.log(request.body.message);
-  console.log(request.body.author); //write it on the command prompt so we can see
+  console.log(request.body.author);
+  //write it on the command prompt so we can see
   let post= {};
-  post.author = request.body.author;
-  post.message = request.body.message;
-  sanitizer.sanitize(request.body.message);
-  post.image = request.body.image;
+  let cleanAuthor = filter.clean(request.body.author);
+  post.author = sanitizer.sanitize(cleanAuthor);
+  let cleanMessage = filter.clean(request.body.message);
+  post.message = sanitizer.sanitize(cleanMessage);
+  let cleanImage = filter.clean(request.body.image);
+  post.image = sanitizer.sanitize(cleanImage);
   if (post.image == "") {
   post.image = "http://4.bp.blogspot.com/-NVNKQIypEFk/T82Of_w1KiI/AAAAAAAAAQE/WXTMrw3dUb8/s1600/mickey-mouse-and-minnie-mouse-cooking-coloring-pages-1.jpg";
-}
+  }
   post.time = new Date();
   post.id = Math.round(Math.random() * 10000);
   posts.push(post);
@@ -49,6 +68,25 @@ function saveNewPost(request, response) {
 }
 app.post('/posts', saveNewPost);
 
+
+//delete message
+function deleteHandler(request, response) {
+   console.log("client wants to delete this post: " + request.body.postId );
+
+   if (request.body.password === "1234") {
+     let postIdNumber = parseInt(request.body.postId);
+     posts = posts.filter(post => post.id != postIdNumber);
+     databasePosts.deleteOne({ id : postIdNumber })
+     response.send("ok");
+   }
+  else {
+  console.log("Wrong password");
+  response.send("Wrong password");
+  }
+
+
+}
+app.post("/delete", deleteHandler);
 
 //pick and return a random element from the given list
 function pickRandomFrom(list) {
