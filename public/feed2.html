@@ -7,8 +7,7 @@
     <title>Message Feed</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
-  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
-  <script src="https://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+  <script src="hammer.min.js"></script>
   </head>
   <img class="logo" src="/images/Blender-logo.png"/>
   <body>
@@ -18,22 +17,9 @@
       <a href="/feed2.html">Read the feed</a>
       <a href="/post.html">Post something</a>
     </div>
-    <div id="container">
-      <div class="card">
-        <img class="avatar"  src="https://tympanus.net/Development/CardStackEffects/img/1.png">
-      </div>
-      <div class="card">
-        <img class="avatar"  src="https://tympanus.net/Development/CardStackEffects/img/2.png">
-      </div>
-      <div class="card">
-        <img class="avatar"  src="https://tympanus.net/Development/CardStackEffects/img/3.png">
-      </div>
-      <div class="card">
-        <img class="avatar"  src="https://tympanus.net/Development/CardStackEffects/img/4.png">
-      </div>
-    </div>
+
     <h1 class="title">Message Feed</h1>
-    <div class="message-list">
+    <div id="container">
     </div>
 
   </div>
@@ -66,7 +52,6 @@ postElement.append(imageElement);
 }
 
 function createFeed(posts) {
-  $("#container").empty();
   posts.forEach(displayMessage);
 }
 
@@ -77,7 +62,7 @@ function nextpost(posts) {
   function nextpostYes(posts) {
     $.get("/random", createFeed);
     let data = {}
-    data.postId = $(".postId").text();
+    data.postId = $(".card:last-child .postId").text();
     $.post("/favourites", data);
 }
 
@@ -93,20 +78,23 @@ nextpost();
 //tree vector pictures designed by Freepik
 function swipe (){
 
-    $('img').on('dragstart', function(event) { event.preventDefault(); });
-
-    $(".card").on("swiperight",function(){
-      setTimeout(nextpostYes, 1700);
-      $(this).addClass('rotate-left').delay(700).fadeOut(1);
-      $(this).append('<div class="status like">Like!</div>');
-    });
-
-   $(".card").on("swipeleft",function(){
-    setTimeout(nextpostNo, 1700);
-    $(this).addClass('rotate-right').delay(700).fadeOut(1);
-    $(this).append('<div class="status dislike">Dislike!</div>');
-  });
+  $('img').on('dragstart', function(event) { event.preventDefault(); });
 };
+
+var hammer = new Hammer(document.querySelector("#container"));
+hammer.on('swipe', function(ev) {
+  console.log(ev);
+	if (ev.direction === 4) {
+    setTimeout(nextpostYes, 1);
+    $(".card:last-child").addClass('rotate-left').delay(700).fadeOut(1);
+    $(".card:last-child").append('<div class="status like">Like!</div>');
+  }
+  if (ev.direction === 2) {
+    setTimeout(nextpostNo, 1);
+    $(".card:last-child").addClass('rotate-right').delay(700).fadeOut(1);
+    $(".card:last-child").append('<div class="status dislike">Dislike!</div>');
+  }
+});
 
 //This is the end of the JavaScript.
     </script>
