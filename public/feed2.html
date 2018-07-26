@@ -7,6 +7,8 @@
     <title>Message Feed</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
+  <script src="https://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
   </head>
   <body>
     <div class="topnav">
@@ -14,7 +16,21 @@
       <a href="/feed.html">My favourites</a>
       <a href="/feed2.html">Read the feed</a>
       <a href="/post.html">Post something</a>
-</div>
+    </div>
+    <div id="container">
+      <div class="card">
+        <img class="avatar"  src="https://tympanus.net/Development/CardStackEffects/img/1.png">
+      </div>
+      <div class="card">
+        <img class="avatar"  src="https://tympanus.net/Development/CardStackEffects/img/2.png">
+      </div>
+      <div class="card">
+        <img class="avatar"  src="https://tympanus.net/Development/CardStackEffects/img/3.png">
+      </div>
+      <div class="card">
+        <img class="avatar"  src="https://tympanus.net/Development/CardStackEffects/img/4.png">
+      </div>
+    </div>
     <h1 class="title">Message Feed</h1>
     <div class="message-list">
     </div>
@@ -29,10 +45,10 @@
 //Hello! This is the start of the JavaScript.
 
 function displayMessage(post) {
-  let postElement = $('<div class="post"></div>');
-  $(".message-list").append(postElement);
+  let postElement = $('<div class="card"></div>');
+  $("#container").append(postElement);
 
-  let imageElement = $('<img src='+ post.image + '>');
+  let imageElement = $('<img class="avatar" src='+ post.image + '>');
 postElement.append(imageElement);
 
   let timeElement = $('<div class="time">' + $.format.prettyDate(post.time) + '</div>');
@@ -46,10 +62,11 @@ postElement.append(imageElement);
 
   let idElement = $('<div class="postId">' + post.id + '</div>');
   postElement.append(idElement);
+  swipe ()
 }
 
 function createFeed(posts) {
-  $(".message-list").empty();
+  $("#container").empty();
   posts.forEach(displayMessage);
 }
 
@@ -65,6 +82,28 @@ $(".showNextPost").on("click",nextpost);
 
 
 //$.get("/random", createFeed);
+$('img').on('dragstart', function(event) { event.preventDefault(); });
+
+//tree vector pictures designed by Freepik
+function swipe (){
+    $(".card").on("swiperight",function(){
+      //to do: tell server we liked this post
+      $(this).addClass('rotate-left').delay(700).fadeOut(1);
+      $(this).append('<div class="status like">Like!</div>');
+      if ( $(this).is(':last-child') ) {
+        //refresh list
+       }
+    });
+
+   $(".card").on("swipeleft",function(){
+    //to do: tell server we disliked this post
+    $(this).addClass('rotate-right').delay(700).fadeOut(1);
+    $(this).append('<div class="status dislike">Dislike!</div>');
+    if ( $(this).is(':last-child') ) {
+     //refresh list
+    }
+  });
+};
 
 //This is the end of the JavaScript.
     </script>
