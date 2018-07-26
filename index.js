@@ -2,6 +2,7 @@
 let express = require('express')
 let app = express();
 let bodyParser = require('body-parser')
+let sanitizer = require('sanitizer');
 let databasePosts = null;
 let session = require('express-session');
 app.use(session({ secret: 'girlcodesecret', cookie: { maxAge: 60000 }}));
@@ -74,12 +75,15 @@ function saveNewPost(request, response) {
   console.log(request.body.author);
   //write it on the command prompt so we can see
   let post= {};
-  post.author = filter.clean(request.body.author);
-  post.message = filter.clean(request.body.message);
-  post.image = request.body.image;
+  let cleanAuthor = filter.clean(request.body.author);
+  post.author = sanitizer.sanitize(cleanAuthor);
+  let cleanMessage = filter.clean(request.body.message);
+  post.message = sanitizer.sanitize(cleanMessage);
+  let cleanImage = filter.clean(request.body.image);
+  post.image = sanitizer.sanitize(cleanImage);
   if (post.image == "") {
   post.image = "http://4.bp.blogspot.com/-NVNKQIypEFk/T82Of_w1KiI/AAAAAAAAAQE/WXTMrw3dUb8/s1600/mickey-mouse-and-minnie-mouse-cooking-coloring-pages-1.jpg";
-}
+  }
   post.time = new Date();
   post.id = Math.round(Math.random() * 10000);
   posts.push(post);
