@@ -2,7 +2,10 @@
 let express = require('express')
 let app = express();
 let bodyParser = require('body-parser')
+let sanitizer = require('sanitizer');
 let databasePosts = null;
+let session = require('express-session');
+app.use(session({ secret: 'girlcodesecret', cookie: { maxAge: 60000 }}));
 var Filter = require('bad-words'),
   filter = new Filter();
 
@@ -15,6 +18,28 @@ app.use(express.static(__dirname + '/public'));
 //this lets us read POST data
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+//when someone posts to favourites, run the 'addFavourite' function
+app.post("/favourites", addFavourite);
+
+function addFavourite(request, response) {
+    let postId = request.body.postId;
+   if (request.session.favourites === undefined) {
+        request.session.favourites = []
+   }
+   request.session.favourites.push(postId);
+   response.send("ok");
+}
+
+//when someone gets favourites, run the 'getFavourites' function
+app.get("/favourites", getFavourites);
+
+function getFavourites(request, response) {
+  if (request.session.favourites === undefined) {
+    request.session.favourites = []
+  }
+  response.send(request.session.favourites.map(id => posts.find(post => post.id == id)));
+}
 
 //make an empty list
 let posts = [];
@@ -50,12 +75,15 @@ function saveNewPost(request, response) {
   console.log(request.body.author);
   //write it on the command prompt so we can see
   let post= {};
-  post.author = filter.clean(request.body.author);
-  post.message = filter.clean(request.body.message);
-  post.image = request.body.image;
+  let cleanAuthor = filter.clean(request.body.author);
+  post.author = sanitizer.sanitize(cleanAuthor);
+  let cleanMessage = filter.clean(request.body.message);
+  post.message = sanitizer.sanitize(cleanMessage);
+  let cleanImage = filter.clean(request.body.image);
+  post.image = sanitizer.sanitize(cleanImage);
   if (post.image == "") {
   post.image = "http://4.bp.blogspot.com/-NVNKQIypEFk/T82Of_w1KiI/AAAAAAAAAQE/WXTMrw3dUb8/s1600/mickey-mouse-and-minnie-mouse-cooking-coloring-pages-1.jpg";
-}
+  }
   post.time = new Date();
   post.id = Math.round(Math.random() * 10000);
   posts.push(post);
